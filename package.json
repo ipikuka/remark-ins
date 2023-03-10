@@ -31,9 +31,10 @@
     "remark",
     "remark-plugin",
     "markdown",
-    "ins",
-    "ins tag",
+    "ins element",
     "inserted text",
+    "remark ins tag",
+    "remark ins element",
     "remark inserted text"
   ],
   "author": "ipikuka <talatkuyuk@gmail.com>",
