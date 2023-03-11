@@ -81,7 +81,7 @@ Without `remark-ins`, you’d get:
 
 There is no option for the `remark-ins`.
 
-## Examples:
+## Example:
 
 ```markdown
 Here is ~~deleted content~~ and ++inserted content++
@@ -90,13 +90,6 @@ Here is **++bold and inserted content++**
 
 ### Heading with ++inserted content++
 ```
-
-#### Without any option
-
-```javascript
-use(remarkIns);
-```
-
 is going to produce as default:
 
 ```html
