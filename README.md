@@ -4,6 +4,8 @@
 [![Build][github-build]][github-build-url]
 ![npm-typescript]
 [![License][github-license]][github-license-url]
+[![codecov](https://codecov.io/gh/ipikuka/remark-ins/graph/badge.svg?token=G4IHZFTC8A)](https://codecov.io/gh/ipikuka/remark-ins)
+[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fipikuka%2Fremark-inss%2Fmaster%2Fpackage.json)](https://github.com/ipikuka/remark-ins)
 
 This package is a [unified][unified] ([remark][remark]) plugin to add ins element (compatible with new parser "[micromark][micromark]").
 
