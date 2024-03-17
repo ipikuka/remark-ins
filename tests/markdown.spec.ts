@@ -48,4 +48,39 @@ describe("within a markdown content", () => {
       "
     `);
   });
+
+  // ******************************************
+  it("works if it contains other phrasing contents like **strong**", async () => {
+    const input = dedent`
+      foo++**a++b**++bar
+
+      foo ++**a++b**++ bar
+
+      ++foo **a++b** bar++
+    `;
+
+    expect(await process(input)).toMatchInlineSnapshot(`
+      "
+      <p>foo<ins class="remark-ins"><strong>a++b</strong></ins>bar</p>
+      <p>foo <ins class="remark-ins"><strong>a++b</strong></ins> bar</p>
+      <p><ins class="remark-ins">foo <strong>a++b</strong> bar</ins></p>
+      "
+    `);
+  });
+
+  // ******************************************
+  it("works if contains other phrasing contents", async () => {
+    const input = dedent`
+      open++**strong ++_italik inserted_++ inserted**++close
+
+      ++open**strong ++_italik inserted_++ inserted**close++
+    `;
+
+    expect(await process(input)).toMatchInlineSnapshot(`
+      "
+      <p>open<ins class="remark-ins"><strong>strong <ins class="remark-ins"><em>italik inserted</em></ins> inserted</strong></ins>close</p>
+      <p><ins class="remark-ins">open<strong>strong <ins class="remark-ins"><em>italik inserted</em></ins> inserted</strong>close</ins></p>
+      "
+    `);
+  });
 });

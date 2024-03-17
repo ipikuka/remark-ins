@@ -75,6 +75,10 @@
   "dependencies": {
     "@types/mdast": "^4.0.3",
     "unist-builder": "^4.0.0",
+    "unist-util-find-after": "^5.0.0",
+    "unist-util-find-all-after": "^5.0.0",
+    "unist-util-find-all-before": "^5.0.0",
+    "unist-util-find-between-all": "^1.0.5",
     "unist-util-visit": "^5.0.0"
   },
   "sideEffects": false,
