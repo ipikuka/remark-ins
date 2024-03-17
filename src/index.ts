@@ -1,7 +1,34 @@
 import { visit, type Visitor, type VisitorResult } from "unist-util-visit";
 import type { Plugin, Transformer } from "unified";
-import type { Paragraph, Parent, Root, Text } from "mdast";
+import type { Data, Parent, PhrasingContent, Root, Text } from "mdast";
 import { u } from "unist-builder";
+
+interface InsertData extends Data {}
+
+interface Insert extends Parent {
+  /**
+   * Node type of mdast Insert.
+   */
+  type: "insert";
+  /**
+   * Children of paragraph.
+   */
+  children: PhrasingContent[];
+  /**
+   * Data associated with the mdast paragraph.
+   */
+  data?: InsertData | undefined;
+}
+
+declare module "mdast" {
+  interface PhrasingContentMap {
+    insert: Insert;
+  }
+
+  interface RootContentMap {
+    insert: Insert;
+  }
+}
 
 // the previous regex was not strict related with spaces
 // export const REGEX = /\+\+\s*([^+]*[^ ])?\s*\+\+/;
@@ -28,10 +55,10 @@ export const plugin: Plugin<void[], Root> = () => {
    * constructs a custom <ins> node
    *
    */
-  const constructInsNode = (insertedText: string | undefined): Paragraph => {
+  const constructInsNode = (insertedText: string | undefined): Insert => {
     // https://github.com/syntax-tree/mdast-util-to-hast#example-supporting-custom-nodes
     return {
-      type: "paragraph",
+      type: "insert",
       children: [{ type: "text", value: insertedText ?? "" }],
       data: {
         hName: "ins",
@@ -53,7 +80,7 @@ export const plugin: Plugin<void[], Root> = () => {
 
     if (!REGEX.test(node.value)) return;
 
-    const children: Array<Text | Paragraph> = [];
+    const children: Array<PhrasingContent> = [];
     const value = node.value;
     let tempValue = "";
     let prevMatchIndex = 0;
@@ -78,13 +105,13 @@ export const plugin: Plugin<void[], Root> = () => {
       if (mIndex > textPartIndex) {
         const textValue = value.substring(textPartIndex, mIndex);
 
-        const textNode = u("text", textValue) as Text;
+        const textNode = u("text", textValue);
         children.push(textNode);
       }
 
-      const inserterNode = constructInsNode(insertedText);
+      const insertNode = constructInsNode(insertedText);
 
-      children.push(inserterNode);
+      children.push(insertNode);
 
       // control for the last text node if exists after the last match
       tempValue = value.slice(mIndex + mLength);
@@ -92,7 +119,7 @@ export const plugin: Plugin<void[], Root> = () => {
 
     // if there is still text after the last match
     if (tempValue) {
-      const textNode = u("text", tempValue) as Text;
+      const textNode = u("text", tempValue);
       children.push(textNode);
     }
 
