@@ -3,8 +3,15 @@ import type { Plugin, Transformer } from "unified";
 import type { Paragraph, Parent, Root, Text } from "mdast";
 import { u } from "unist-builder";
 
-export const REGEX = /\+\+\s*([^+]*[^ ])?\s*\+\+/;
-export const REGEX_GLOBAL = /\+\+\s*([^+]*[^ ])?\s*\+\+/g;
+// the previous regex was not strict related with spaces
+// export const REGEX = /\+\+\s*([^+]*[^ ])?\s*\+\+/;
+// export const REGEX_GLOBAL = /\+\+\s*([^+]*[^ ])?\s*\+\+/g;
+
+// the new regex is strict!
+// it doesn't allow a space after the first double equity sign
+// it doesn't allow a space before the last double equity sign
+export const REGEX = /\+\+(?![\s+])([\s\S]*?)(?<![\s+])\+\+/;
+export const REGEX_GLOBAL = /\+\+(?![\s+])([\s\S]*?)(?<![\s+])\+\+/g;
 
 /**
  *

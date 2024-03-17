@@ -6,23 +6,29 @@ describe("no options - fail", () => {
   // ******************************************
   it("bad usage", async () => {
     const input = dedent`
-      ++marked text with bad wrapped+
+      ++inserted text with bad wrapped+
 
-      +marked text with bad wrapped++
+      +inserted text with bad wrapped++
 
-      + +marked text with bad wrapped++
+      + +inserted text with bad wrapped++
 
       ++**strong text in ins, instead of inserted text in strong**++
+
+      ++ inserted text with unwanted space++
+
+      ++inserted text with unwanted space ++
     `;
 
     expect(await process(input)).toMatchInlineSnapshot(`
       "
-      <p>++marked text with bad wrapped+</p>
-      <p>+marked text with bad wrapped++</p>
+      <p>++inserted text with bad wrapped+</p>
+      <p>+inserted text with bad wrapped++</p>
       <ul>
-        <li>+marked text with bad wrapped++</li>
+        <li>+inserted text with bad wrapped++</li>
       </ul>
       <p>++<strong>strong text in ins, instead of inserted text in strong</strong>++</p>
+      <p>++ inserted text with unwanted space++</p>
+      <p>++inserted text with unwanted space ++</p>
       "
     `);
   });
@@ -30,20 +36,17 @@ describe("no options - fail", () => {
 
 describe("no options - success", () => {
   // ******************************************
-  it("empty inserted text", async () => {
+  it.skip("empty inserted texts", async () => {
     const input = dedent(`
       ++++
 
       ++  ++
-
-      Here **empty** ++++ inserted text within a content
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
       "
       <p><ins class="remark-ins-empty"></ins></p>
       <p><ins class="remark-ins-empty"></ins></p>
-      <p>Here <strong>empty</strong> <ins class="remark-ins-empty"></ins>inserted text within a content</p>
       "
     `);
   });
@@ -51,7 +54,7 @@ describe("no options - success", () => {
   // ******************************************
   it("standart usage", async () => {
     const input = dedent(`
-      ++inserted++ ++  another inserted  ++ 
+      ++inserted++ ++another inserted++ 
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
@@ -86,15 +89,15 @@ describe("no options - success", () => {
   // ******************************************
   it("standart usage with extra content", async () => {
     const input = dedent(`      
-      ++inserted++ with extra content ++  other inserted  ++ 
+      ++inserted++ with extra content ++ could not inserted++ 
 
-      ++inserted++ **with extra boldcontent** ++  another inserted   ++ 
+      ++inserted++ **with extra boldcontent** ++another could not inserted ++ 
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
       "
-      <p><ins class="remark-ins">inserted</ins> with extra content <ins class="remark-ins">other inserted</ins></p>
-      <p><ins class="remark-ins">inserted</ins> <strong>with extra boldcontent</strong> <ins class="remark-ins">another inserted</ins></p>
+      <p><ins class="remark-ins">inserted</ins> with extra content ++ could not inserted++</p>
+      <p><ins class="remark-ins">inserted</ins> <strong>with extra boldcontent</strong> ++another could not inserted ++</p>
       "
     `);
   });

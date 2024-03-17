@@ -34,35 +34,44 @@ describe("remark-flexigraph regex tests", () => {
         input: "+a+inserted++",
         expect: null,
       },
-      //********************************* */
       {
         input: "++++",
-        expect: {
-          insertedText: undefined,
-        },
+        expect: null,
       },
       {
         input: "++ ++",
-        expect: {
-          insertedText: undefined,
-        },
+        expect: null,
       },
       {
         input: "++  ++",
+        expect: null,
+      },
+      {
+        input: "++ inserted inserted++",
+        expect: null,
+      },
+      {
+        input: "++inserted inserted ++",
+        expect: null,
+      },
+      //********************************* */
+      {
+        input: "++inserted text++",
         expect: {
-          insertedText: undefined,
+          insertedText: "inserted text",
         },
       },
       {
-        input: "++inserted++",
+        input: "++inserted++ outer++",
         expect: {
           insertedText: "inserted",
         },
       },
+      // TODO: how to match the shorter ?
       {
-        input: "++ inserted inserted    ++",
+        input: "++outer ++inserted++",
         expect: {
-          insertedText: "inserted inserted",
+          insertedText: "outer ++inserted",
         },
       },
     ];
