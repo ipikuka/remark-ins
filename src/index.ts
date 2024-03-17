@@ -51,6 +51,9 @@ export const REGEX_STARTING_GLOBAL = /\+\+(?![\s]|\++\s)/g;
 export const REGEX_ENDING = /(?<!\s|\s\+|\s\+|\s\+|\s\+)\+\+/;
 export const REGEX_ENDING_GLOBAL = /(?<!\s|\s\+|\s\+|\s\+|\s\+)\+\+/g;
 
+export const REGEX_EMPTY = /\+\+\s*\+\+/;
+export const REGEX_EMPTY_GLOBAL = /\+\+\s*\+\+/g;
+
 /**
  *
  * This plugin turns ++text++ into a <ins>text</ins>
@@ -230,12 +233,73 @@ export const plugin: Plugin<void[], Root> = () => {
     return index; // in order to re-visit the same node and children
   };
 
+  /**
+   *
+   * visits the Text nodes to find empty markers (==== or == ==)
+   *
+   */
+  const visitorThird: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
+    /* istanbul ignore next */
+    if (!parent || typeof index === "undefined") return;
+
+    if (!REGEX_EMPTY.test(node.value)) return;
+
+    const children: Array<PhrasingContent> = [];
+    const value = node.value;
+    let tempValue = "";
+    let prevMatchIndex = 0;
+    let prevMatchLength = 0;
+
+    const matches = Array.from(value.matchAll(REGEX_EMPTY_GLOBAL));
+
+    for (let index = 0; index < matches.length; index++) {
+      const match = matches[index];
+
+      const [matched] = match;
+      const mIndex = match.index!;
+      const mLength = matched.length;
+
+      // could be a text part before each matched part
+      const textPartIndex = prevMatchIndex + prevMatchLength;
+
+      prevMatchIndex = mIndex;
+      prevMatchLength = mLength;
+
+      // if there is a text part before
+      if (mIndex > textPartIndex) {
+        const textValue = value.substring(textPartIndex, mIndex);
+
+        const textNode = u("text", textValue);
+        children.push(textNode);
+      }
+
+      // empty marker
+      const markerNode = constructInsertNode([]);
+
+      children.push(markerNode);
+
+      // control for the last text node if exists after the last match
+      tempValue = value.slice(mIndex + mLength);
+    }
+
+    // if there is still text after the last match
+    if (tempValue) {
+      const textNode = u("text", tempValue);
+      children.push(textNode);
+    }
+
+    if (children.length) parent.children.splice(index, 1, ...children);
+  };
+
   const transformer: Transformer<Root> = (tree) => {
     // to find insert syntax in a Text node
     visit(tree, "text", visitorFirst);
 
     // to find insert syntax if the parent contains other content phrases
     visit(tree, "text", visitorSecond);
+
+    // to find empty ins (++++ or ++ ++)
+    visit(tree, "text", visitorThird);
   };
 
   return transformer;

@@ -33,7 +33,7 @@ describe("no options - fail", () => {
 
 describe("no options - success", () => {
   // ******************************************
-  it.skip("empty inserted texts", async () => {
+  it("empty inserted texts", async () => {
     const input = dedent(`
       ++++
 
