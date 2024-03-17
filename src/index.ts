@@ -55,15 +55,18 @@ export const plugin: Plugin<void[], Root> = () => {
    * constructs a custom <ins> node
    *
    */
-  const constructInsNode = (insertedText: string | undefined): Insert => {
+  const constructInsertNode = (children: PhrasingContent[]): Insert => {
     // https://github.com/syntax-tree/mdast-util-to-hast#example-supporting-custom-nodes
+
+    const insertClassName = children.length ? ["remark-ins"] : ["remark-ins-empty"];
+
     return {
       type: "insert",
-      children: [{ type: "text", value: insertedText ?? "" }],
+      children,
       data: {
         hName: "ins",
         hProperties: {
-          className: insertedText ? ["remark-ins"] : ["remark-ins-empty"],
+          className: insertClassName,
         },
       },
     };
@@ -96,7 +99,7 @@ export const plugin: Plugin<void[], Root> = () => {
       const mLength = matched.length;
 
       // could be a text part before each matched part
-      const textPartIndex = index === 0 ? 0 : prevMatchIndex + prevMatchLength;
+      const textPartIndex = prevMatchIndex + prevMatchLength;
 
       prevMatchIndex = mIndex;
       prevMatchLength = mLength;
@@ -109,7 +112,7 @@ export const plugin: Plugin<void[], Root> = () => {
         children.push(textNode);
       }
 
-      const insertNode = constructInsNode(insertedText);
+      const insertNode = constructInsertNode([{ type: "text", value: insertedText.trim() }]);
 
       children.push(insertNode);
 
