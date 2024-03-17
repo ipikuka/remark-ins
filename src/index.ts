@@ -41,7 +41,8 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitor: Visitor<Text> = function (node, index, parent): VisitorResult {
-    if (!parent) return;
+    /* istanbul ignore next */
+    if (!parent || typeof index === "undefined") return;
 
     if (!REGEX.test(node.value)) return;
 
@@ -90,7 +91,7 @@ export const plugin: Plugin<void[], Root> = () => {
       children.push(textNode);
     }
 
-    if (children.length) parent.children.splice(index!, 1, ...children);
+    if (children.length) parent.children.splice(index, 1, ...children);
   };
 
   const transformer: Transformer<Root> = (tree) => {
