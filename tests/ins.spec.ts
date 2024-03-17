@@ -12,8 +12,6 @@ describe("no options - fail", () => {
 
       + +inserted text with bad wrapped++
 
-      ++**strong text in ins, instead of inserted text in strong**++
-
       ++ inserted text with unwanted space++
 
       ++inserted text with unwanted space ++
@@ -26,7 +24,6 @@ describe("no options - fail", () => {
       <ul>
         <li>+inserted text with bad wrapped++</li>
       </ul>
-      <p>++<strong>strong text in ins, instead of inserted text in strong</strong>++</p>
       <p>++ inserted text with unwanted space++</p>
       <p>++inserted text with unwanted space ++</p>
       "
@@ -41,12 +38,15 @@ describe("no options - success", () => {
       ++++
 
       ++  ++
+
+      a++ ++a
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
       "
       <p><ins class="remark-ins-empty"></ins></p>
       <p><ins class="remark-ins-empty"></ins></p>
+      <p>a<ins class="remark-ins-empty"></ins>a</p>
       "
     `);
   });
@@ -67,14 +67,14 @@ describe("no options - success", () => {
   // ******************************************
   it("inserted text in a strong", async () => {
     const input = dedent(`      
-        **++bold inserted++**
+      **++bold inserted++**
 
-        here is **++bold inserted++**
+      here is **++bold inserted++**
 
-        **++bold inserted++** is here
+      **++bold inserted++** is here
 
-        **strong ++bold inserted++**
-      `);
+      **strong ++bold inserted++**
+    `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
       "
@@ -117,6 +117,38 @@ describe("no options - success", () => {
       <p>Here is <del>deleted content</del> and <ins class="remark-ins">inserted content</ins></p>
       <p>Here is <strong><ins class="remark-ins">bold and inserted content</ins></strong></p>
       <h3>Heading with <ins class="remark-ins">inserted content</ins></h3>
+      "
+    `);
+  });
+
+  // ******************************************
+  it("nested ins don't work, arbitrary inserted texts are considered right", async () => {
+    const input = dedent`
+      ++outer ++inner++ inserted++
+
+      ++inserted++inner++inserted++
+    `;
+
+    expect(await process(input)).toMatchInlineSnapshot(`
+      "
+      <p><ins class="remark-ins">outer ++inner</ins> inserted++</p>
+      <p><ins class="remark-ins">inserted</ins>inner<ins class="remark-ins">inserted</ins></p>
+      "
+    `);
+  });
+
+  // ******************************************
+  it("works if contains other phrasing contents", async () => {
+    const input = dedent`
+      ++**xxx++_yyy_++zzz**++
+
+      ++Google is [++another inserted++](https://www.google.com) in inserted++
+    `;
+
+    expect(await process(input)).toMatchInlineSnapshot(`
+      "
+      <p><ins class="remark-ins"><strong>xxx<ins class="remark-ins"><em>yyy</em></ins>zzz</strong></ins></p>
+      <p><ins class="remark-ins">Google is <a href="https://www.google.com"><ins class="remark-ins">another inserted</ins></a> in inserted</ins></p>
       "
     `);
   });
