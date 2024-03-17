@@ -1,23 +1,6 @@
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import gfm from "remark-gfm";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
 import dedent from "dedent";
-import type { VFileCompatible } from "vfile";
 
-import plugin from "../src";
-
-const compiler = unified()
-  .use(remarkParse)
-  .use(gfm)
-  .use(plugin)
-  .use(remarkRehype)
-  .use(rehypeStringify);
-
-const process = async (contents: VFileCompatible): Promise<VFileCompatible> => {
-  return compiler.process(contents).then((file) => file.value);
-};
+import { process } from "./util/index";
 
 describe("no options - fail", () => {
   // ******************************************
@@ -33,12 +16,14 @@ describe("no options - fail", () => {
     `;
 
     expect(await process(input)).toMatchInlineSnapshot(`
-      "<p>++marked text with bad wrapped+</p>
+      "
+      <p>++marked text with bad wrapped+</p>
       <p>+marked text with bad wrapped++</p>
       <ul>
-      <li>+marked text with bad wrapped++</li>
+        <li>+marked text with bad wrapped++</li>
       </ul>
-      <p>++<strong>strong text in ins, instead of inserted text in strong</strong>++</p>"
+      <p>++<strong>strong text in ins, instead of inserted text in strong</strong>++</p>
+      "
     `);
   });
 });
@@ -55,9 +40,11 @@ describe("no options - success", () => {
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
-      "<p><ins class="remark-ins-empty"></ins></p>
+      "
       <p><ins class="remark-ins-empty"></ins></p>
-      <p>Here <strong>empty</strong> <ins class="remark-ins-empty"></ins> inserted text within a content</p>"
+      <p><ins class="remark-ins-empty"></ins></p>
+      <p>Here <strong>empty</strong> <ins class="remark-ins-empty"></ins>inserted text within a content</p>
+      "
     `);
   });
 
@@ -67,9 +54,11 @@ describe("no options - success", () => {
       ++inserted++ ++  another inserted  ++ 
     `);
 
-    expect(await process(input)).toMatchInlineSnapshot(
-      `"<p><ins class="remark-ins">inserted</ins> <ins class="remark-ins">another inserted</ins></p>"`,
-    );
+    expect(await process(input)).toMatchInlineSnapshot(`
+      "
+      <p><ins class="remark-ins">inserted</ins> <ins class="remark-ins">another inserted</ins></p>
+      "
+    `);
   });
 
   // ******************************************
@@ -85,10 +74,12 @@ describe("no options - success", () => {
       `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
-      "<p><strong><ins class="remark-ins">bold inserted</ins></strong></p>
+      "
+      <p><strong><ins class="remark-ins">bold inserted</ins></strong></p>
       <p>here is <strong><ins class="remark-ins">bold inserted</ins></strong></p>
       <p><strong><ins class="remark-ins">bold inserted</ins></strong> is here</p>
-      <p><strong>strong <ins class="remark-ins">bold inserted</ins></strong></p>"
+      <p><strong>strong <ins class="remark-ins">bold inserted</ins></strong></p>
+      "
     `);
   });
 
@@ -101,8 +92,10 @@ describe("no options - success", () => {
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
-      "<p><ins class="remark-ins">inserted</ins> with extra content <ins class="remark-ins">other inserted</ins></p>
-      <p><ins class="remark-ins">inserted</ins> <strong>with extra boldcontent</strong> <ins class="remark-ins">another inserted</ins></p>"
+      "
+      <p><ins class="remark-ins">inserted</ins> with extra content <ins class="remark-ins">other inserted</ins></p>
+      <p><ins class="remark-ins">inserted</ins> <strong>with extra boldcontent</strong> <ins class="remark-ins">another inserted</ins></p>
+      "
     `);
   });
 
@@ -117,9 +110,11 @@ describe("no options - success", () => {
     `);
 
     expect(await process(input)).toMatchInlineSnapshot(`
-      "<p>Here is <del>deleted content</del> and <ins class="remark-ins">inserted content</ins></p>
+      "
+      <p>Here is <del>deleted content</del> and <ins class="remark-ins">inserted content</ins></p>
       <p>Here is <strong><ins class="remark-ins">bold and inserted content</ins></strong></p>
-      <h3>Heading with <ins class="remark-ins">inserted content</ins></h3>"
+      <h3>Heading with <ins class="remark-ins">inserted content</ins></h3>
+      "
     `);
   });
 });
