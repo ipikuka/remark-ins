@@ -4,7 +4,7 @@
 [![NPM downloads][badge-npm-download]][npm-package-url]
 [![Build][badge-build]][github-workflow-url]
 [![codecov](https://codecov.io/gh/ipikuka/remark-ins/graph/badge.svg?token=G4IHZFTC8A)](https://codecov.io/gh/ipikuka/remark-ins)
-[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fipikuka%2Fremark-inss%2Fmaster%2Fpackage.json)](https://github.com/ipikuka/remark-ins)
+[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fipikuka%2Fremark-ins%2Fmaster%2Fpackage.json)](https://github.com/ipikuka/remark-ins)
 [![typescript][badge-typescript]][typescript-url]
 [![License][badge-license]][github-license-url]
 
@@ -16,7 +16,9 @@ This package is a [unified][unified] ([remark][remark]) plugin to add `<ins>` el
 
 ## When should I use this?
 
-This plugin is useful if you want to **add a \<ins\> element** in markdown, which represents a range of text that has been added to a document. **You can easily create \<ins\> element with the `remark-ins`.**
+This plugin is useful if you want to **add a `<ins>` element** in markdown, which represents a range of text that has been added to a document.
+
+**You can easily create `<ins>` element with the `remark-ins`.**
 
 ## Installation
 
@@ -34,16 +36,12 @@ yarn add remark-ins
 
 ## Usage
 
-#### `++` sign around the content
-
-```markdown
-++inserted text++
-```
+#### use `++` around the content
 
 Say we have the following file, `example.md`, which consists some flexible markers.
 
 ```markdown
-++This text has been inserted++
+++inserted text++
 ```
 
 And our module, `example.js`, looks as follows:
@@ -73,13 +71,59 @@ async function main() {
 Now, running `node example.js` yields:\
 
 ```html
-<p><ins class="remark-ins">This text has been inserted</ins></p>
+<p><ins class="remark-ins">inserted text</ins></p>
 ```
 
 Without `remark-ins`, you’d get:
 
 ```html
-<p>++This text has been inserted++</p>
+<p>++inserted text++</p>
+```
+
+> [!CAUTION]
+> **The double plus signs must be adjacent to the content**.\
+> **The content must be wrapped with double plus signs, not singular at any side.**\
+
+Here are some bad usage, and will not work.
+
+```markdown
+++text with bad wrapped+
+
++text with bad wrapped++
+
+++ text with unwanted space++
+
+++text with unwanted space ++
+```
+
+## It is more flexible and powerful
+
+As of version `^1.1.0`, the `remark-ins` can handle also the syntax containing other markdown phrases like `strong`, `emphasis`, `link` etc. For example:
+
+```
+++**inserted bold content**++
+
+++_inserted italic content_++
+
+++[inserted link](https://google.com)++
+```
+
+```html
+<p>
+  <ins class="remark-ins">
+    <strong>inserted bold content</strong>
+  </ins>
+</p>
+<p>
+  <ins class="remark-ins">
+    <em>inserted italic content</em>
+  </ins>
+</p>
+<p>
+  <ins class="remark-ins">
+    <a href="https://google.com">inserted link</a>
+  </ins>
+</p>
 ```
 
 ## Options
@@ -89,17 +133,25 @@ There is no option for the `remark-ins`.
 ## Example:
 
 ```markdown
-Here is ~~deleted content~~ and ++inserted content++
+~~deleted content~~ and ++inserted content++
 
-Here is **++bold and inserted content++**
+**++inserted bold content++** and ++**inserted bold content**++
 
 ### Heading with ++inserted content++
 ```
 is going to produce as default:
 
 ```html
-<p>Here is <del>deleted content</del> and <ins class="remark-ins">inserted content</ins></p>
-<p>Here is <strong><ins class="remark-ins">bold and inserted content</ins></strong></p>
+<p>
+  <del>deleted content</del>
+   and 
+  <ins class="remark-ins">inserted content</ins>
+</p>
+<p>
+  <strong><ins class="remark-ins">inserted bold content</ins></strong>
+   and 
+  <ins class="remark-ins"><strong>inserted bold content</strong></ins>
+</p>
 <h3>Heading with <ins class="remark-ins">inserted content</ins></h3>
 ```
 
