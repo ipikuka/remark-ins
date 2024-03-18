@@ -1,6 +1,6 @@
 {
   "name": "remark-ins",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Remark plugin to add ins element in markdown",
   "type": "module",
   "exports": "./dist/esm/index.js",
