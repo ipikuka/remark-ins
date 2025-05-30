@@ -92,7 +92,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorFirst: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* istanbul ignore next */
+    /* v8 ignore next */
     if (!parent || typeof index === "undefined") return;
 
     if (!REGEX.test(node.value)) return;
@@ -150,7 +150,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorSecond: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* istanbul ignore next */
+    /* v8 ignore next */
     if (!parent || typeof index === "undefined") return;
 
     // control if the Text node matches with "starting ins regex"
@@ -239,7 +239,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorThird: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* istanbul ignore next */
+    /* v8 ignore next */
     if (!parent || typeof index === "undefined") return;
 
     if (!REGEX_EMPTY.test(node.value)) return;
