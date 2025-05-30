@@ -8,6 +8,7 @@ import { findAllAfter } from "unist-util-find-all-after";
 import { findAfter } from "unist-util-find-after";
 import { u } from "unist-builder";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface InsertData extends Data {}
 
 interface Insert extends Parent {
