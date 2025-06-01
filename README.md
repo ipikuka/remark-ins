@@ -3,8 +3,7 @@
 [![NPM version][badge-npm-version]][npm-package-url]
 [![NPM downloads][badge-npm-download]][npm-package-url]
 [![Build][badge-build]][github-workflow-url]
-[![codecov](https://codecov.io/gh/ipikuka/remark-ins/graph/badge.svg?token=G4IHZFTC8A)](https://codecov.io/gh/ipikuka/remark-ins)
-[![type-coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fipikuka%2Fremark-ins%2Fmaster%2Fpackage.json)](https://github.com/ipikuka/remark-ins)
+
 [![typescript][badge-typescript]][typescript-url]
 [![License][badge-license]][github-license-url]
 
@@ -163,7 +162,7 @@ This plugin only modifies the mdast (markdown abstract syntax tree) as explained
 
 ## Types
 
-This package is fully typed with [TypeScript][typescript].
+This package is fully typed with [TypeScript][url-typescript].
 
 ## Compatibility
 
@@ -239,21 +238,26 @@ I like to contribute the Unified / Remark / MDX ecosystem, so I recommend you to
 [remarkinsertedtextnpm]: https://www.npmjs.com/search?q=keywords:remark%20inserted%20text
 
 [unified]: https://github.com/unifiedjs/unified
+[micromark]: https://github.com/micromark/micromark
 [remark]: https://github.com/remarkjs/remark
 [remarkplugins]: https://github.com/remarkjs/remark/blob/main/doc/plugins.md
 [mdast]: https://github.com/syntax-tree/mdast
-[micromark]: https://github.com/micromark/micromark
-[typescript]: https://www.typescriptlang.org/
 
 [badge-npm-version]: https://img.shields.io/npm/v/remark-ins
 [badge-npm-download]:https://img.shields.io/npm/dt/remark-ins
-[npm-package-url]: https://www.npmjs.com/package/remark-ins
+[url-npm-package]: https://www.npmjs.com/package/remark-ins
+[url-github-package]: https://github.com/ipikuka/remark-ins
 
 [badge-license]: https://img.shields.io/github/license/ipikuka/remark-ins
-[github-license-url]: https://github.com/ipikuka/remark-ins/blob/main/LICENSE
+[url-license]: https://github.com/ipikuka/remark-ins/blob/main/LICENSE
 
-[badge-build]: https://github.com/ipikuka/remark-ins/actions/workflows/publish.yml/badge.svg
-[github-workflow-url]: https://github.com/ipikuka/remark-ins/actions/workflows/publish.yml
+[badge-publish-to-npm]: https://github.com/ipikuka/remark-ins/actions/workflows/publish.yml/badge.svg
+[url-publish-github-actions]: https://github.com/ipikuka/remark-ins/actions/workflows/publish.yml
 
 [badge-typescript]: https://img.shields.io/npm/types/remark-ins
-[typescript-url]: https://www.typescriptlang.org/
+[url-typescript]: https://www.typescriptlang.org/
+
+[badge-codecov]: https://codecov.io/gh/ipikuka/remark-ins/graph/badge.svg?token=G4IHZFTC8A
+[url-codecov]: https://codecov.io/gh/ipikuka/remark-ins
+
+[badge-type-coverage]: https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fipikuka%2Fremark-ins%2Fmaster%2Fpackage.json
