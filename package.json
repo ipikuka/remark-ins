@@ -33,6 +33,7 @@
     "unified",
     "mdast",
     "markdown",
+    "MDX",
     "remark",
     "plugin",
     "remark plugin",
