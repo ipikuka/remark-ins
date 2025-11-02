@@ -93,7 +93,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorFirst: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* v8 ignore next */
+    /* v8 ignore next -- @preserve */
     if (!parent || typeof index === "undefined") return;
 
     if (!REGEX.test(node.value)) return;
@@ -141,7 +141,11 @@ export const plugin: Plugin<void[], Root> = () => {
       children.push(textNode);
     }
 
-    if (children.length) parent.children.splice(index, 1, ...children);
+    // classic V8 coverage false negative
+    /* v8 ignore next -- @preserve */
+    if (children.length) {
+      parent.children.splice(index, 1, ...children);
+    }
   };
 
   /**
@@ -151,7 +155,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorSecond: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* v8 ignore next */
+    /* v8 ignore next -- @preserve */
     if (!parent || typeof index === "undefined") return;
 
     // control if the Text node matches with "starting ins regex"
@@ -240,7 +244,7 @@ export const plugin: Plugin<void[], Root> = () => {
    *
    */
   const visitorThird: Visitor<Text, Parent> = function (node, index, parent): VisitorResult {
-    /* v8 ignore next */
+    /* v8 ignore next -- @preserve */
     if (!parent || typeof index === "undefined") return;
 
     if (!REGEX_EMPTY.test(node.value)) return;
@@ -289,7 +293,11 @@ export const plugin: Plugin<void[], Root> = () => {
       children.push(textNode);
     }
 
-    if (children.length) parent.children.splice(index, 1, ...children);
+    // classic V8 coverage false negative
+    /* v8 ignore next -- @preserve */
+    if (children.length) {
+      parent.children.splice(index, 1, ...children);
+    }
   };
 
   const transformer: Transformer<Root> = (tree) => {
