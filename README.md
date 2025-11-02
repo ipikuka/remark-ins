@@ -1,15 +1,16 @@
 # remark-ins
 
-[![NPM version][badge-npm-version]][npm-package-url]
-[![NPM downloads][badge-npm-download]][npm-package-url]
-[![Build][badge-build]][github-workflow-url]
+[![npm version][badge-npm-version]][url-npm-package]
+[![npm downloads][badge-npm-download]][url-npm-package]
+[![publish to npm][badge-publish-to-npm]][url-publish-github-actions]
+[![code-coverage][badge-codecov]][url-codecov]
+[![type-coverage][badge-type-coverage]][url-github-package]
+[![typescript][badge-typescript]][url-typescript]
+[![license][badge-license]][url-license]
 
-[![typescript][badge-typescript]][typescript-url]
-[![License][badge-license]][github-license-url]
+This package is a [**unified**][unified] ([**remark**][remark]) plugin **to add custom `<ins>` element in markdown.**
 
-This package is a [unified][unified] ([remark][remark]) plugin to add `<ins>` element in markdown.
-
-**[unified][unified]** is a project that transforms content with abstract syntax trees (ASTs) using the new parser **[micromark][micromark]**. **[remark][remark]** adds support for markdown to unified. **[mdast][mdast]** is the Markdown Abstract Syntax Tree (AST) which is a specification for representing markdown in a syntax tree.
+[**unified**][unified] is a project that transforms content with abstract syntax trees (ASTs) using the new parser [**micromark**][micromark]. [**remark**][remark] adds support for markdown to unified. [**mdast**][mdast] is the Markdown Abstract Syntax Tree (AST) which is a specification for representing markdown in a syntax tree.
 
 **This plugin is a remark plugin that transforms the mdast.**
 
