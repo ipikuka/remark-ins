@@ -16,7 +16,7 @@ This package is a [**unified**][unified] ([**remark**][remark]) plugin **to add 
 
 ## When should I use this?
 
-This plugin is useful if you want to **add a `<ins>` element** in markdown, which represents a range of text that has been added to a document.
+**`remark-ins`** is useful if you want to **add a `<ins>` element** in markdown, which represents a range of text that has been added to a document.
 
 **You can easily create `<ins>` element with the `remark-ins`.**
 
@@ -68,13 +68,13 @@ async function main() {
 }
 ```
 
-Now, running `node example.js` yields:\
+Now, running `node example.js` yields:
 
 ```html
 <p><ins class="remark-ins">inserted text</ins></p>
 ```
 
-Without `remark-ins`, you’d get:
+Without **`remark-ins`**, you’d get:
 
 ```html
 <p>++inserted text++</p>
@@ -98,7 +98,7 @@ Here are some bad usage, and will not work.
 
 ## It is more flexible and powerful
 
-As of version `^1.1.0`, the `remark-ins` can handle also the syntax containing other markdown phrases like `strong`, `emphasis`, `link` etc. For example:
+As of version `^1.1.0`, **`remark-ins`** can handle also the syntax containing other markdown phrases like `strong`, `emphasis`, `link` etc. For example:
 
 ```
 ++**inserted bold content**++
@@ -128,7 +128,7 @@ As of version `^1.1.0`, the `remark-ins` can handle also the syntax containing o
 
 ## Options
 
-There is no option for the `remark-ins`.
+There is no option for **`remark-ins`**.
 
 ## Example:
 
@@ -171,7 +171,7 @@ This plugin works with `unified` version 6+ and `remark` version 7+. It is compa
 
 ## Security
 
-Use of `remark-ins` does not involve rehype (hast) or user content so there are no openings for cross-site scripting (XSS) attacks.
+Use of **`remark-ins`** does not involve rehype (hast) or user content so there are no openings for cross-site scripting (XSS) attacks.
 
 ## My Plugins
 
