@@ -26,7 +26,7 @@ This package is a [**unified**][unified] ([**remark**][remark]) plugin **to add 
 
 **`remark-ins`** is useful if you want to **add a `<ins>` element** in markdown, which represents a range of text that has been added to a document.
 
-**You can easily create `<ins>` element with the `remark-ins`.**
+**You can easily create `<ins>` element with `remark-ins`.**
 
 ## Installation
 
