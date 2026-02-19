@@ -1,6 +1,6 @@
 {
   "name": "remark-ins",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Remark plugin to add ins element in markdown",
   "type": "module",
   "main": "./dist/index.js",
