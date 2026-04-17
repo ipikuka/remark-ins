@@ -2,7 +2,7 @@ import { visit } from "unist-util-visit";
 import type { Visitor, VisitorResult } from "unist-util-visit";
 import type { Plugin, Transformer } from "unified";
 import type { Data, Parent, PhrasingContent, Root, Text } from "mdast";
-import { findAllBetween } from "unist-util-find-between-all";
+import { findBetween } from "unist-util-find-between";
 import { findAllBefore } from "unist-util-find-all-before";
 import { findAllAfter } from "unist-util-find-all-after";
 import { findAfter } from "unist-util-find-after";
@@ -173,7 +173,7 @@ export const plugin: Plugin<void[], Root> = () => {
     // now, ensured that the parent has a ins element between opening Text node and closing Text nodes
 
     const beforeChildren = findAllBefore(parent, openingNode) as PhrasingContent[];
-    const mainChildren = findAllBetween(parent, openingNode, closingNode) as PhrasingContent[];
+    const mainChildren = findBetween(parent, openingNode, closingNode) as PhrasingContent[];
     const afterChildren = findAllAfter(parent, closingNode) as PhrasingContent[];
 
     /********************* OPENING NODE ***********************/
