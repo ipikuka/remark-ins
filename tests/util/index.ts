@@ -6,7 +6,7 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import type { VFileCompatible, Value } from "vfile";
 
-import plugin from "../../src";
+import plugin from "../../src/index.js";
 
 const compiler = unified()
   .use(remarkParse)
